@@ -1,0 +1,37 @@
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, NavLink } from "react-router-dom";
+
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Help from "./pages/Help";
+import Contact from "./pages/Contact";
+import SignIn from "./pages/SignIn";
+import "./App.css";
+
+function App() {
+  return (
+    <Router>
+      <div className="navbar">
+        <div className="logo">👁 Eye2Heart</div>
+
+        <div className="nav-links">
+          <NavLink to="/" end>Home</NavLink>
+          <NavLink to="/about">About</NavLink>
+          <NavLink to="/help">Help</NavLink>
+          <NavLink to="/contact">Contact</NavLink>
+          <NavLink to="/signin" className="signin-btn">Sign In</NavLink>
+        </div>
+      </div>
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/help" element={<Help />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/signin" element={<SignIn />} />
+      </Routes>
+    </Router>
+  );
+}
+
+export default App;
