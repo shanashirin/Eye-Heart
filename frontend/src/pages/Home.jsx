@@ -129,7 +129,7 @@ export default function Home() {
       {/* FOOTER */}
       <footer className="home-footer">
         <div className="footer-content">
-          <span>© 2026 RetinaHeart AI</span>
+          <span>© 2026 EYE2HEART AI</span>
           <div className="footer-links">
             <a href="#privacy">Privacy Policy</a>
             <a href="#terms">Terms of Service</a>

@@ -12,7 +12,8 @@ function App() {
   return (
     <Router>
       <div className="navbar">
-        <div className="logo">👁 Eye2Heart</div>
+        <div className="navbar-content">
+        <div className="logo">👁 Eye2Heart</div></div>
 
         <div className="nav-links">
           <NavLink to="/" end>Home</NavLink>
