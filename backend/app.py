@@ -305,25 +305,25 @@ def predict():
         heatmap = cv2.resize(heatmap, (IMG_SIZE, IMG_SIZE))
 
     # Normalize heatmap properly
-    heatmap = np.maximum(heatmap, 0)
-    heatmap /= (np.max(heatmap) + 1e-8)
+        heatmap = np.maximum(heatmap, 0)
+        heatmap /= (np.max(heatmap) + 1e-8)
 
-    heatmap = np.uint8(255 * heatmap)
+        heatmap = np.uint8(255 * heatmap)
 
     # Convert heatmap to color
-    heatmap_color = cv2.applyColorMap(heatmap, cv2.COLORMAP_TURBO)
+        heatmap_color = cv2.applyColorMap(heatmap, cv2.COLORMAP_TURBO)
 
     # IMPORTANT: Convert heatmap to RGB
-    heatmap_color = cv2.cvtColor(heatmap_color, cv2.COLOR_BGR2RGB)
+        heatmap_color = cv2.cvtColor(heatmap_color, cv2.COLOR_BGR2RGB)
 
     # Overlay on ORIGINAL RGB image
-    overlayed_img = (0.6 * original_resized + 0.4 * heatmap_color).astype(np.uint8)
+        overlayed_img = (0.6 * original_resized + 0.4 * heatmap_color).astype(np.uint8)
 
     # Convert to base64
-    gradcam_pil = Image.fromarray(overlayed_img)
-    buffer2 = BytesIO()
-    gradcam_pil.save(buffer2, format="PNG")
-    gradcam_base64 = base64.b64encode(buffer2.getvalue()).decode("utf-8")
+        gradcam_pil = Image.fromarray(overlayed_img)
+        buffer2 = BytesIO()
+        gradcam_pil.save(buffer2, format="PNG")
+        gradcam_base64 = base64.b64encode(buffer2.getvalue()).decode("utf-8")
     # ===============================
 # CLINICAL DATA → RISK LEVEL
 # ===============================
