@@ -1,0 +1,134 @@
+/* VitalsTrends.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+.vitals-container {
+  padding: 40px;
+  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(
+    135deg,
+    #f6c1d8,
+    #c9c3e6,
+    #b7d7f2
+  );
+  color: #2d3154;
+}
+
+/* Header */
+.vitals-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.vitals-header h1 {
+  font-size: 30px;
+  font-weight: 700;
+  color: #2d3154;
+}
+
+/* Stats Grid */
+.vitals-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+/* Cards */
+.vital-card {
+  background: white;
+  padding: 24px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease;
+}
+
+.vital-card:hover {
+  transform: translateY(-5px);
+}
+
+.vital-card h3 {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #6b7280;
+  margin-bottom: 12px;
+}
+
+.vital-value {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+/* Status Badges */
+.status-badge {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.high {
+  background: #ffe5e5;
+  color: #e53935;
+}
+
+.medium {
+  background: #fff3d6;
+  color: #fb8c00;
+}
+
+.low {
+  background: #e0f7e9;
+  color: #43a047;
+}
+
+/* Table Section */
+.trend-table {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  background: rgba(201, 195, 230, 0.25);
+  padding: 16px;
+  text-align: left;
+  font-size: 13px;
+  color: #2d3154;
+}
+
+td {
+  padding: 16px;
+  border-bottom: 1px solid #f1f1f1;
+  font-size: 14px;
+}
+
+tr:hover {
+  background-color: rgba(246, 193, 216, 0.15);
+}
+
+/* Export Button */
+.export-btn {
+  background: linear-gradient(135deg, #c9c3e6, #b7d7f2);
+  color: #2d3154;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.export-btn:hover {
+  opacity: 0.85;
+}

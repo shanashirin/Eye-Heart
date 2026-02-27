@@ -1,0 +1,123 @@
+
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(
+    135deg,
+    #f3c6d3,
+    #c4d7f2,
+    #d6c8f5
+  );
+  background-size: 300% 300%;
+  animation: gradientMove 12s ease infinite;
+  color: white;
+}
+
+/* Smooth animated gradient */
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* NAVBAR */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 60px;
+  backdrop-filter: blur(10px);
+}
+
+.nav-links a {
+  margin-left: 25px;
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.nav-links a:hover {
+  opacity: 0.7;
+}
+
+.signin-btn {
+  padding: 8px 18px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.3);
+}
+/* Active page gradient */
+.nav-links a.active {
+  background: linear-gradient(to right, #ff7eb3, #6ec6ff);
+  -webkit-background-clip: text;
+  color: transparent;
+  font-weight: 700;
+  position: relative;
+}
+
+/* Optional underline effect */
+.nav-links a.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(to right, #ff7eb3, #6ec6ff);
+  border-radius: 10px;
+}
+/* NAVBAR */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 60px;
+  
+  background: linear-gradient(
+    135deg,
+    #3a3d6b,
+    #2b5876,
+    #1f2a44
+  );
+
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-logo {
+  font-size: 24px;
+  font-weight: 700;
+  color: white;
+  letter-spacing: 1px;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+}
+
+.navbar-links a {
+  text-decoration: none;
+  color: #e0e7ff;
+  font-weight: 500;
+  transition: 0.3s ease;
+}
+
+.navbar-links a:hover {
+  color: #ff7eb3;
+}
+
+/* Login Button */
+.navbar-btn {
+  padding: 8px 20px;
+  border-radius: 20px;
+  border: none;
+  background: linear-gradient(to right, #ff7eb3, #6ec6ff);
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.navbar-btn:hover {
+  transform: scale(1.05);
+}

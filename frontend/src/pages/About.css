@@ -1,0 +1,192 @@
+/* About.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
+
+.about-container {
+  font-family: "Poppins", sans-serif;
+  min-height: 100vh;
+  /* Your Original Gradient */
+  background: linear-gradient(135deg, #f6c1d8, #c9c3e6, #b7d7f2);
+  padding: 80px 10%;
+  color: #2d3154; /* Professional dark navy */
+}
+
+/* HERO SECTION */
+.about-hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 80px;
+  margin-bottom: 100px;
+}
+
+.about-left h1 {
+  font-size: clamp(42px, 5vw, 64px);
+  font-weight: 800;
+  line-height: 1.1;
+  color: #2d3154;
+  letter-spacing: -2px;
+}
+
+.about-left p {
+  font-size: 18px;
+  line-height: 1.8;
+  color: #4b5563; /* Slate grey for readability */
+  margin: 25px 0;
+}
+
+/* THE PREMIUM BUTTON */
+.primary-btn {
+  padding: 16px 36px;
+  border-radius: 50px;
+  border: none;
+  background: linear-gradient(135deg, #ff85b3 0%, #7091ff 100%);
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 10px 20px rgba(255, 133, 179, 0.25);
+}
+
+.primary-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px rgba(112, 145, 255, 0.4);
+}
+
+/* CRYSTAL GLASS CARDS */
+.info-card, .process-card {
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 28px;
+  padding: 40px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04);
+  transition: 0.3s ease;
+}
+
+.process-card:hover {
+  transform: translateY(-10px);
+  background: rgba(255, 255, 255, 0.65);
+}
+
+/* PROCESS GRID (Professional 3-Column Layout) */
+.process-section h2 {
+  font-size: 42px;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 60px;
+  color: #2d3154;
+}
+
+.process-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Matching your Home Page journey steps */
+  gap: 30px;
+}
+
+.process-icon {
+  font-size: 30px;
+  background: white;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* FOOTER - CLEAN & LIGHT */
+.about-footer {
+  margin-top: 100px;
+  padding: 60px;
+  text-align: center;
+  background: transparent; /* Removed the heavy dark background */
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+  color: #64748b;
+}
+
+.disclaimer {
+  font-size: 12px;
+  margin-top: 10px;
+  font-style: italic;
+}
+/* INFO CARD SPECIFIC TUNING */
+.info-card {
+  max-width: 500px;
+  border: 1px solid rgba(255, 255, 255, 0.8) !important;
+}
+
+.eye-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.eye-badge {
+  background: white;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  font-size: 20px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.info-card h3 {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0;
+  color: #2d3154;
+}
+
+.info-desc {
+  font-size: 15px !important;
+  color: #555c71;
+  margin-bottom: 30px !important;
+}
+
+/* THE 2X2 GRID SYSTEM */
+.feature-2x2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.feature-item {
+  background: rgba(255, 255, 255, 0.5);
+  padding: 15px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  transition: all 0.3s ease;
+}
+
+.feature-item span {
+  font-size: 13px;
+  font-weight: 600;
+  color: #3a3d6b;
+}
+
+.feature-item:hover {
+  background: white;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+}
+
+/* DECORATIVE DOTS */
+.item-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.item-dot.pink { background: #ff85b3; box-shadow: 0 0 10px rgba(255, 133, 179, 0.4); }
+.item-dot.blue { background: #7091ff; box-shadow: 0 0 10px rgba(112, 145, 255, 0.4); }
+.item-dot.purple { background: #c9c3e6; box-shadow: 0 0 10px rgba(201, 195, 230, 0.4); }
+.item-dot.cyan { background: #7dd3fc; box-shadow: 0 0 10px rgba(125, 211, 252, 0.4); }
