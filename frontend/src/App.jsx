@@ -11,7 +11,7 @@ import "./App.css";
 import Profile from "./pages/Profile";
 import VitalsTrends from "./pages/VitalsTrends";
 import Analyze from "./pages/Analyze";
-
+import Dashboard from "./pages/Dashboard";
 function App() {
   return (
     <Router>
@@ -39,6 +39,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/vitals" element={<VitalsTrends />} />
         <Route path="/analyze" element={<Analyze />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
 
     </Router>
