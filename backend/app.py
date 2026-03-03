@@ -15,8 +15,14 @@ import tensorflow as tf
 import base64
 from io import BytesIO
 from PIL import Image
+# ===== AI CHATBOT IMPORT =====
+from openai import OpenAI
+import os
 
-# ===== JWT IMPORTS =====
+client = OpenAI(
+    api_key="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",
+    base_url="https://openrouter.ai/api/v1"
+)# ===== JWT IMPORTS =====
 from flask_jwt_extended import (
     JWTManager,
     create_access_token,
@@ -156,13 +162,29 @@ def init_optical_scan_db():
 
     conn.commit()
     conn.close()
+def init_chat_db():
+    conn = sqlite3.connect("vitals.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS chat_history (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id TEXT NOT NULL,
+            user_message TEXT,
+            bot_reply TEXT,
+            created_at TEXT
+        )
+    """)
+
+    conn.commit()
+    conn.close()
 
 init_db()
 init_user_db()
 init_vitals_db()
 init_cardiac_db()
 init_optical_scan_db()
-
+init_chat_db()
 # ===============================
 # IMAGE PREPROCESS
 # ===============================
@@ -663,6 +685,91 @@ def get_optical_scan_history():
     conn.close()
 
     return jsonify([dict(row) for row in rows])
+# ===============================
+# AI DOCTOR CHAT
+# ===============================
+@app.route("/api/chat", methods=["POST"])
+@jwt_required()
+def ai_doctor_chat():
+
+    user_id = get_jwt_identity()
+    data = request.get_json()
+    user_message = data.get("message")
+
+    if not user_message:
+        return jsonify({"error": "Message required"}), 400
+
+    # Fetch latest risk result
+    conn = sqlite3.connect("vitals.db")
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT risk_level, risk_percent, confidence
+        FROM vitals
+        WHERE user_id=?
+        ORDER BY id DESC
+        LIMIT 1
+    """, (user_id,))
+    
+    latest = cursor.fetchone()
+
+    risk_info = ""
+    if latest:
+        risk_info = f"""
+        Latest Cardiovascular Risk:
+        Risk Level: {latest['risk_level']}
+        Risk Percent: {latest['risk_percent']}%
+        Model Confidence: {latest['confidence']}%
+        """
+
+    conn.close()
+
+    try:
+        response = client.chat.completions.create(
+            model="openai/gpt-4o-mini",
+            messages=[
+                {
+                    "role": "system",
+                    "content": """
+                    You are a professional cardiologist AI assistant.
+                    Provide accurate medical explanations.
+                    Use simple language.
+                    Always remind user to consult a real doctor for serious issues.
+                    """
+                },
+                {
+                    "role": "user",
+                    "content": risk_info + "\n\nUser Question:\n" + user_message
+                }
+            ],
+            temperature=0.5
+        )
+
+        bot_reply = response.choices[0].message.content
+
+        # Save chat history
+        conn = sqlite3.connect("vitals.db")
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT INTO chat_history (user_id, user_message, bot_reply, created_at)
+            VALUES (?, ?, ?, ?)
+        """, (
+            user_id,
+            user_message,
+            bot_reply,
+            datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        ))
+        conn.commit()
+        conn.close()
+
+        return jsonify({"reply": bot_reply})
+
+    except Exception as e:
+        print("========== CHAT ERROR ==========")
+        print(str(e))
+        print("================================")
+        return jsonify({"error": str(e)}), 500
 
 
 # ===============================

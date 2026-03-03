@@ -8,6 +8,11 @@ export default function Analyze() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [patientName, setPatientName] = useState("");
+  // ===== AI CHAT STATES =====
+const [chatOpen, setChatOpen] = useState(false);
+const [chatMessage, setChatMessage] = useState("");
+const [chatHistory, setChatHistory] = useState([]);
+const [chatLoading, setChatLoading] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -111,6 +116,43 @@ await axios.post(
   const handleDownload = () => {
     window.print();
   };
+  // ===== SEND CHAT MESSAGE =====
+const sendChatMessage = async () => {
+  if (!chatMessage.trim()) return;
+
+  const token = localStorage.getItem("token");
+
+  const updatedChat = [
+    ...chatHistory,
+    { sender: "user", text: chatMessage }
+  ];
+  setChatHistory(updatedChat);
+  setChatMessage("");
+  setChatLoading(true);
+
+  try {
+    const res = await axios.post(
+      "http://localhost:5000/api/chat",
+      { message: chatMessage },
+      {
+        headers: { Authorization: `Bearer ${token}` }
+      }
+    );
+
+    setChatHistory([
+      ...updatedChat,
+      { sender: "bot", text: res.data.reply }
+    ]);
+  } catch (err) {
+    console.error("Chat Error:", err);
+    setChatHistory([
+      ...updatedChat,
+      { sender: "bot", text: "⚠️ AI Doctor unavailable." }
+    ]);
+  }
+
+  setChatLoading(false);
+};
 
   const styles = {
     wrapper: {
@@ -392,6 +434,111 @@ await axios.post(
           }
         `}</style>
       </main>
+      {/* ===== Floating Chat Button ===== */}
+<div
+  onClick={() => setChatOpen(true)}
+  style={{
+    position: "fixed",
+    bottom: "25px",
+    right: "25px",
+    width: "70px",
+    height: "70px",
+    borderRadius: "50%",
+    background: "linear-gradient(135deg, #ff7eb3, #6ec6ff)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: "30px",
+    color: "white",
+    cursor: "pointer",
+    boxShadow: "0 10px 25px rgba(0,0,0,0.2)",
+    zIndex: 999
+  }}
+>
+  💬
+</div>
+
+{/* ===== Chat Popup ===== */}
+{chatOpen && (
+  <div
+    style={{
+      position: "fixed",
+      bottom: "110px",
+      right: "25px",
+      width: "350px",
+      height: "450px",
+      background: "white",
+      borderRadius: "20px",
+      boxShadow: "0 20px 40px rgba(0,0,0,0.2)",
+      display: "flex",
+      flexDirection: "column",
+      overflow: "hidden",
+      zIndex: 999
+    }}
+  >
+    <div style={{
+      background: "linear-gradient(135deg, #ff7eb3, #6ec6ff)",
+      color: "white",
+      padding: "15px",
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center"
+    }}>
+      <strong>🩺 AI Doctor</strong>
+      <span style={{ cursor: "pointer" }} onClick={() => setChatOpen(false)}>✖</span>
+    </div>
+
+    <div style={{ flex: 1, padding: "15px", overflowY: "auto", fontSize: "14px" }}>
+      {chatHistory.map((msg, i) => (
+        <div key={i}
+          style={{
+            marginBottom: "10px",
+            textAlign: msg.sender === "user" ? "right" : "left"
+          }}>
+          <span style={{
+            display: "inline-block",
+            padding: "8px 12px",
+            borderRadius: "15px",
+            background: msg.sender === "user" ? "#6ec6ff" : "#f1f5f9",
+            color: msg.sender === "user" ? "white" : "#2d3748"
+          }}>
+            {msg.text}
+          </span>
+        </div>
+      ))}
+
+      {chatLoading && <div>Typing...</div>}
+    </div>
+
+    <div style={{ display: "flex", borderTop: "1px solid #eee" }}>
+      <input
+        type="text"
+        value={chatMessage}
+        onChange={(e) => setChatMessage(e.target.value)}
+        onKeyDown={(e) => e.key === "Enter" && sendChatMessage()}
+        placeholder="Ask about your heart health..."
+        style={{
+          flex: 1,
+          padding: "12px",
+          border: "none",
+          outline: "none"
+        }}
+      />
+      <button
+        onClick={sendChatMessage}
+        style={{
+          background: "#6ec6ff",
+          border: "none",
+          color: "white",
+          padding: "0 15px",
+          cursor: "pointer"
+        }}
+      >
+        ➤
+      </button>
+    </div>
+  </div>
+)}
     </div>
   );
 }

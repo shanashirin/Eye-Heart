@@ -67,6 +67,20 @@ export default function Dashboard() {
   >
     🫀 Cardiac History
   </button>
+  {/* ✅ AI Doctor Chat Button */}
+<button
+  onClick={() => navigate("/ai-doctor")}
+  style={{
+    padding: "10px 20px",
+    borderRadius: "8px",
+    border: "none",
+    background: "#16a085",
+    color: "#fff",
+    cursor: "pointer"
+  }}
+>
+  🩺 Talk to AI Doctor
+</button>
 </div>
 
       <div className="cards">

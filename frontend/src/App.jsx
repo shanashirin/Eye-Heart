@@ -14,6 +14,7 @@ import Analyze from "./pages/Analyze";
 import Dashboard from "./pages/Dashboard";
 import CardiacHistory from "./pages/CardiacHistory";
 import OpticalScanHistory from "./pages/OpticalScanHistory";
+import AIDoctorChat from "./pages/AIDoctorChat";
 function App() {
   return (
     <Router>
@@ -44,6 +45,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/history" element={<CardiacHistory />} />
         <Route path="/scans" element={<OpticalScanHistory />} />
+        <Route path="/ai-doctor" element={<AIDoctorChat />} />
       </Routes>
 
     </Router>
