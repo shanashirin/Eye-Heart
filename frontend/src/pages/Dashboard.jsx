@@ -103,7 +103,9 @@ export default function Dashboard() {
           <h3>Disease Detected</h3>
           <p>
             {summary.latest_record 
-              ? (summary.latest_record.disease_detected ? "POSITIVE" : "NEGATIVE") 
+              ? (summary.latest_record?.disease_detected === 1
+  ? "POSITIVE"
+  : "NEGATIVE") 
               : "N/A"}
           </p>
         </div>

@@ -523,12 +523,16 @@ def dashboard_summary():
 
     # Latest record
     cursor.execute("""
-        SELECT risk_level, risk_percent, confidence, created_at
-        FROM vitals
-        WHERE user_id=?
-        ORDER BY id DESC
-        LIMIT 1
-    """, (user_id,))
+        SELECT risk_level,
+           risk_percent,
+           confidence,
+           disease_detected,
+           created_at
+    FROM vitals
+    WHERE user_id=?
+    ORDER BY id DESC
+    LIMIT 1
+""", (user_id,))
     latest = cursor.fetchone()
 
     conn.close()
