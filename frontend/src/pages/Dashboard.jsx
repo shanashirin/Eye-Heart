@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";   // ✅ added
 import "./Dashboard.css";
 
 export default function Dashboard() {
+  const navigate = useNavigate();   // ✅ added
+
   const [summary, setSummary] = useState(null);
   const [vitals, setVitals] = useState([]);
 
@@ -33,6 +36,38 @@ export default function Dashboard() {
       <header>
         <h1>📊 Patient Analytics</h1>
       </header>
+
+      {/* ✅ Back to Profile Button */}
+     <div style={{ marginBottom: "20px", display: "flex", gap: "10px" }}>
+  <button
+    onClick={() => navigate("/profile")}
+    style={{
+      padding: "10px 20px",
+      borderRadius: "8px",
+      border: "none",
+      background: "#556175",
+      color: "#fff",
+      cursor: "pointer"
+    }}
+  >
+    ← Back to Profile
+  </button>
+
+  {/* ✅ Cardiac History Button */}
+  <button
+    onClick={() => navigate("/history")}
+    style={{
+      padding: "10px 20px",
+      borderRadius: "8px",
+      border: "none",
+      background: "#c0392b",
+      color: "#fff",
+      cursor: "pointer"
+    }}
+  >
+    🫀 Cardiac History
+  </button>
+</div>
 
       <div className="cards">
         <div className="card">

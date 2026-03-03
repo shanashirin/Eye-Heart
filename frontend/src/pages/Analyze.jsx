@@ -81,6 +81,25 @@ export default function Analyze() {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setResult(res.data);
+
+// 🔥 SAVE OPTICAL SCAN LOG
+await axios.post(
+  "http://localhost:5000/api/optical-scan-log",
+  {
+    passenger_count: 0,              // You can modify if needed
+    life_jacket_count: 0,
+    overcrowded: "No",
+    weather_status: "Clear",
+    person_overboard: "No",
+    scanned_image: res.data.original_image  // SAVE BASE64 IMAGE
+  },
+  {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json"
+    }
+  }
+);
     } catch (error) {
       console.error(error);
       alert("Error connecting to backend");

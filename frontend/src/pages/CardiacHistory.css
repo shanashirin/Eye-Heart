@@ -1,0 +1,260 @@
+.history-container {
+  padding: 40px 6%;
+  font-family: "Inter", "Segoe UI", sans-serif;
+
+  /* SAME background as About page */
+  background: linear-gradient(135deg, #f6c1d8, #c9c3e6, #b7d7f2);
+
+  min-height: 100vh;
+}
+
+.history-header h2 {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.history-header p {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 40px;
+}
+
+.history-card {
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 16px;
+  padding: 25px;
+  margin-bottom: 30px;
+  background: linear-gradient(
+    135deg,
+    rgba(106,17,203,0.05),
+    rgba(37,117,252,0.05)
+  );
+}
+
+/* Header */
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.card-date {
+  font-size: 13px;
+  color: #555;
+}
+
+.card-badges {
+  display: flex;
+  gap: 12px;
+}
+
+/* Positive / Negative */
+.result-badge {
+  padding: 6px 14px;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+}
+
+.result-badge.positive {
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+}
+
+.result-badge.negative {
+  background: linear-gradient(135deg, #6a11cb80, #2575fc80);
+}
+
+/* Risk */
+.risk-badge {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.risk-badge.low {
+  color: #15803d;
+}
+
+.risk-badge.medium {
+  color: #b45309;
+}
+
+.risk-badge.high {
+  color: #b91c1c;
+}
+
+/* Vitals */
+.vitals-section {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding: 15px;
+  background: rgba(0,0,0,0.04);
+  border-radius: 10px;
+}
+
+.vitals-section span {
+  display: block;
+  font-size: 12px;
+  color: #666;
+}
+
+.vitals-section strong {
+  font-size: 15px;
+}
+
+/* Sections */
+.info-section {
+  margin-bottom: 18px;
+}
+
+.info-section h4 {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.info-section p {
+  font-size: 13px;
+  color: #444;
+}
+
+/* Loading */
+.history-loading {
+  padding: 60px;
+  text-align: center;
+}
+
+/* Empty */
+.no-records {
+  padding: 40px;
+  text-align: center;
+  color: #666;
+}
+.history-container {
+  padding: 40px 6% ;
+  font-family: "Inter", "Segoe UI", sans-serif;
+  /* Use the background color from your UI */
+  background-color: #e2e2f3; 
+  min-height: 100vh;
+}
+
+.history-header h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #2d3436;
+  margin-bottom: 5px;
+}
+
+.history-header p {
+  font-size: 14px;
+  color: #636e72;
+  margin-bottom: 40px;
+}
+
+/* Professional Glassmorphic Card */
+.history-card {
+  background: rgba(255, 255, 255, 0.4); /* Transparent white */
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 20px;
+  padding: 30px;
+  margin-bottom: 25px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  padding-bottom: 15px;
+}
+
+.card-date {
+  font-size: 14px;
+  font-weight: 500;
+  color: #576574;
+}
+
+/* Badges: Using solid professional tones */
+.result-badge {
+  padding: 6px 16px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.result-badge.negative {
+  background-color: #7d5fff; /* Muted Purple to match your 'Sign In' button */
+  color: white;
+}
+
+.result-badge.positive {
+  background-color: #d63031;
+  color: white;
+}
+
+.risk-badge {
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.risk-badge.low { color: #00b894; border: 1px solid #00b894; }
+.risk-badge.medium { color: #e17055; border: 1px solid #e17055; }
+.risk-badge.high { color: #d63031; border: 1px solid #d63031; }
+
+/* Vitals Section: Clean Grid */
+.vitals-section {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 25px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+}
+
+.vitals-section div {
+  text-align: left;
+}
+
+.vitals-section span {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #8395a7;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.vitals-section strong {
+  font-size: 18px;
+  color: #2d3436;
+}
+
+/* Info Sections */
+.info-section {
+  margin-bottom: 20px;
+}
+
+.info-section h4 {
+  font-size: 13px;
+  text-transform: uppercase;
+  color: #576574;
+  margin-bottom: 6px;
+  letter-spacing: 0.3px;
+}
+
+.info-section p {
+  font-size: 15px;
+  color: #2d3436;
+  line-height: 1.5;
+  margin: 0;
+}

@@ -101,6 +101,8 @@ def init_vitals_db():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             user_id TEXT NOT NULL,
             image_name TEXT,
+            original_image TEXT,
+            gradcam_image TEXT,
             heart_rate INTEGER,
             disease_detected INTEGER,
             risk_level TEXT,
@@ -111,10 +113,55 @@ def init_vitals_db():
     """)
     conn.commit()
     conn.close()
+def init_cardiac_db():
+    conn = sqlite3.connect("vitals.db")
+    cursor = conn.cursor()
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS cardiac_history (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id TEXT NOT NULL,
+            heart_disease TEXT,
+            bp_history TEXT,
+            diabetes TEXT,
+            cholesterol TEXT,
+            smoking TEXT,
+            family_history TEXT,
+            surgery TEXT,
+            medications TEXT,
+            allergies TEXT,
+            notes TEXT,
+            created_at TEXT
+        )
+    """)
+    conn.commit()
+    conn.close()
+def init_optical_scan_db():
+    conn = sqlite3.connect("vitals.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS optical_scan_logs (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id TEXT NOT NULL,
+            original_image TEXT,
+            gradcam_image TEXT,
+            disease_detected INTEGER,
+            risk_level TEXT,
+            risk_percent REAL,
+            confidence REAL,
+            heart_rate INTEGER,
+            created_at TEXT
+        )
+    """)
+
+    conn.commit()
+    conn.close()
 
 init_db()
 init_user_db()
 init_vitals_db()
+init_cardiac_db()
+init_optical_scan_db()
 
 # ===============================
 # IMAGE PREPROCESS
@@ -352,6 +399,8 @@ def predict():
     INSERT INTO vitals (
         user_id,
         image_name,
+        original_image,
+        gradcam_image,
         heart_rate,
         disease_detected,
         risk_level,
@@ -359,10 +408,12 @@ def predict():
         confidence,
         created_at
     )
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     """, (
         user_id,
         filename,
+        original_base64,
+        gradcam_base64,
         heart_rate,
         int(disease_detected),
         risk_level,
@@ -410,6 +461,8 @@ def get_vitals():
     cursor.execute("""
         SELECT 
             image_name,
+            original_image,
+            gradcam_image,
             heart_rate,
             disease_detected,
             risk_level,
@@ -463,6 +516,155 @@ def dashboard_summary():
         "high_risk_cases": high_risk,
         "latest_record": dict(latest) if latest else None
     })
+# ===============================
+# SAVE CARDIAC HISTORY
+# ===============================
+@app.route("/api/save-cardiac", methods=["POST"])
+@jwt_required()
+def save_cardiac():
+
+    user_id = get_jwt_identity()
+    data = request.get_json()
+
+    conn = sqlite3.connect("vitals.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        INSERT INTO cardiac_history (
+            user_id,
+            heart_disease,
+            bp_history,
+            diabetes,
+            cholesterol,
+            smoking,
+            family_history,
+            surgery,
+            medications,
+            allergies,
+            notes,
+            created_at
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    """, (
+        user_id,
+        data.get("heart_disease"),
+        data.get("bp_history"),
+        data.get("diabetes"),
+        data.get("cholesterol"),
+        data.get("smoking"),
+        data.get("family_history"),
+        data.get("surgery"),
+        data.get("medications"),
+        data.get("allergies"),
+        data.get("notes"),
+        datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    ))
+
+    conn.commit()
+    conn.close()
+
+    return jsonify({"message": "Cardiac history saved successfully"})
+# ===============================
+# GET CARDIAC HISTORY
+# ===============================
+@app.route("/api/get-cardiac", methods=["GET"])
+@jwt_required()
+def get_cardiac():
+
+    user_id = get_jwt_identity()
+
+    conn = sqlite3.connect("vitals.db")
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT *
+        FROM cardiac_history
+        WHERE user_id=?
+        ORDER BY id DESC
+        LIMIT 1
+    """, (user_id,))
+
+    record = cursor.fetchone()
+    conn.close()
+
+    return jsonify(dict(record) if record else {})
+# ===============================
+# SAVE OPTICAL SCAN LOG
+# ===============================
+@app.route("/api/optical-scan-log", methods=["POST"])
+@jwt_required()
+def save_optical_scan():
+
+    user_id = get_jwt_identity()
+    data = request.get_json()
+
+    conn = sqlite3.connect("vitals.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    INSERT INTO optical_scan_logs (
+        user_id,
+        original_image,
+        gradcam_image,
+        disease_detected,
+        risk_level,
+        risk_percent,
+        confidence,
+        heart_rate,
+        created_at
+    )
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+""", (
+    user_id,
+    data.get("original_image"),
+    data.get("gradcam_image"),
+    int(data.get("disease_detected", 0)),
+    data.get("risk_level"),
+    float(data.get("risk_percent", 0)),
+    float(data.get("confidence", 0)),
+    data.get("heart_rate"),
+    datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+))
+
+    conn.commit()
+    conn.close()
+
+    return jsonify({"message": "Scan saved successfully"})
+# ===============================
+# GET OPTICAL SCAN HISTORY
+# ===============================
+@app.route("/api/optical-scan-history", methods=["GET"])
+@jwt_required()
+def get_optical_scan_history():
+
+    user_id = get_jwt_identity()
+
+    conn = sqlite3.connect("vitals.db")
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT 
+            original_image,
+            gradcam_image,
+            disease_detected,
+            risk_level,
+            risk_percent,
+            confidence,
+            heart_rate,
+            created_at
+        FROM optical_scan_logs
+        WHERE user_id = ?
+        ORDER BY id DESC
+    """, (user_id,))
+
+    rows = cursor.fetchall()
+    conn.close()
+
+    return jsonify([dict(row) for row in rows])
+
+
 # ===============================
 # RUN SERVER
 # ===============================

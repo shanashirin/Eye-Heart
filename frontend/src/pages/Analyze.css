@@ -87,7 +87,7 @@
 .img-container img {
   width: 100%;
   border-radius: 12px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #eceef0;
   margin-top: 8px;
 }
 
@@ -124,7 +124,7 @@
 
 .panel-header {
   background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-  color: white;
+  color: rgb(243, 237, 237);
   padding: 40px;
   display: flex;
   justify-content: space-between;

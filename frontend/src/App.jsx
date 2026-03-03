@@ -12,6 +12,8 @@ import Profile from "./pages/Profile";
 import VitalsTrends from "./pages/VitalsTrends";
 import Analyze from "./pages/Analyze";
 import Dashboard from "./pages/Dashboard";
+import CardiacHistory from "./pages/CardiacHistory";
+import OpticalScanHistory from "./pages/OpticalScanHistory";
 function App() {
   return (
     <Router>
@@ -40,6 +42,8 @@ function App() {
         <Route path="/vitals" element={<VitalsTrends />} />
         <Route path="/analyze" element={<Analyze />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/history" element={<CardiacHistory />} />
+        <Route path="/scans" element={<OpticalScanHistory />} />
       </Routes>
 
     </Router>
